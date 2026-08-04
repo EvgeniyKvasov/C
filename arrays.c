@@ -11,5 +11,9 @@ int main(){
 		printf(" %d ", my_array[i]);
 	}
 
+	for(int i = 3; i >= 0; i--){
+		printf(" %d ", my_array[i]);
+	}
+
 	return 0;
 }
