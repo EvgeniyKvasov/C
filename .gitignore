@@ -1,0 +1,6 @@
+perceptron
+*.o
+*.out
+*.exe
+a.out
+build/
