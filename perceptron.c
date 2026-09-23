@@ -2,7 +2,7 @@
 
 int main(){
 	
-	int x1, x2, ua, p, m; // ua - храним ответ пользователя о дожде, p - храним овтет перцептрона, m - ошибка
+	int x1, x2, ua, p, m, errors; // ua - храним ответ пользователя о дожде, p - храним овтет перцептрона, m - ошибка, erros - счетчик ошибок
 	
 	float w1, w2, s, b, lr; // x - факты, w - веса, s - сумма, b - смещение, lr - скорость обучения
 	
@@ -22,57 +22,79 @@ int main(){
 	
 	printf("Простейшая реализация однослойного перцептрона.\n");
 	
-	for (int i = 0; i < 5; i++){
+	for (int epoch = 0; epoch < 5; epoch++){
 		
-		printf("Входные данные х1 и х2: \n");
+		errors = 0;
 	
-		//scanf("%d", &x1);
+		for (int i = 0; i < 5; i++){
+			
+			printf("Входные данные х1 и х2: \n");
 		
-		//scanf("%d", &x2);
-		
-		x1 = array1[i];
-		
-		x2 = array2[i];
-		
-		s = x1 * w1 + x2 * w2 + b;
-		
-		if (s > 0){
+			//scanf("%d", &x1);
 			
-			printf("Возьми зонт!\n");
+			//scanf("%d", &x2);
 			
-			p = 1;
+			x1 = array1[i];
 			
-			//printf("%d\n", p);
+			x2 = array2[i];
 			
-		} else{
+			s = x1 * w1 + x2 * w2 + b;
 			
-			printf("Зонт не нужен!\n");
+			if (s > 0){
+				
+				printf("Возьми зонт!\n");
+				
+				p = 1;
+				
+				//printf("%d\n", p);
+				
+			} else{
+				
+				printf("Зонт не нужен!\n");
+				
+				p = 0;
+				
+				//printf("%d\n", p);
+				
+			}
 			
-			p = 0;
+			printf("Был ли в итоге дождь?\n");
 			
-			//printf("%d\n", p);
+			//scanf("%d", &ua);
+			
+			ua = array3[i];
+			
+			m = ua - p;
+			
+			if (m != 0){
+				
+				errors++;
+				
+			}
+			
+			printf("%d\n", m);
+			
+			printf("считаем новые веса и смещение с учетом ошибки.\n");
+			
+			w1 = w1 + lr * m * x1;
+			
+			w2 = w2 + lr * m * x2;
+			
+			b = b + lr * m;
+			
+			printf("Новые веса w1: %.2f, w2: %.2f и смещение: %.2f.\n", w1, w2, b);
 			
 		}
-		
-		printf("Был ли в итоге дождь?\n");
-		
-		//scanf("%d", &ua);
-		
-		ua = array3[i];
-		
-		m = ua - p;
-		
-		printf("%d\n", m);
-		
-		printf("считаем новые веса и смещение с учетом ошибки.\n");
-		
-		w1 = w1 + lr * m * x1;
-		
-		w2 = w2 + lr * m * x2;
-		
-		b = b + lr * m;
-		
-		printf("Новые веса w1: %.2f, w2: %.2f и смещение: %.2f.\n", w1, w2, b);
+			
+			printf("Эпоха окончена. Ошибок было: %d\n", errors);
+			
+			if (errors == 0){
+				
+				printf("Ошибок не было!\n");
+				
+				break;
+				
+			}
 		
 	}
 	
